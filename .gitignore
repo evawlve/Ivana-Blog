@@ -1,0 +1,15 @@
+# Node modules
+node_modules/
+
+# Eleventy output folder (default is _site)
+_site/
+
+dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Optional: VSCode settings
+.vscode/

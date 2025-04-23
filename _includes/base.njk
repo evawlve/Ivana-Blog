@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title> {# Uses the 'title' variable from the page's front matter #}
+    <link rel="stylesheet" href="/css/style.css"> 
+  </head>
+  <body>
+    <header>
+      <h1>My Friend's Awesome Blog</h1>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/about/">About</a> {# Link to a future About page #}
+      </nav>
+    </header>
+
+    <main>
+      {{ content | safe }} {# This is where the content from your .md files will be inserted #}
+    </main>
+
+    <footer>
+      <p>&copy; {{ currentYear }} Your Friend's Name</p> {# Example dynamic data #}
+    </footer>
+  </body>
+</html>

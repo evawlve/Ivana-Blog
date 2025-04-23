@@ -1,0 +1,28 @@
+---
+title: Home
+layout: base.njk
+---
+
+{# You can keep any introductory content you want here #}
+<h2>Recent Posts</h2>
+
+{# Check if there are any posts in the collection #}
+{%- if collections.post and collections.post.length -%}
+  <ul>
+    {# Loop through the 'post' collection. 
+       We use 'reverse' to show newest posts first (based on date in front matter). #}
+    {%- for post in collections.post | reverse -%}
+      <li>
+        {# Create a link to the post using its URL #}
+        <a href="{{ post.url }}">
+          {# Display the post's title from its front matter #}
+          {{ post.data.title }}
+        </a>
+        {# Optional: Display the date - We'll format this better later #}
+        - <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
+      </li>
+    {%- endfor -%}
+  </ul>
+{%- else -%}
+  <p>No posts found.</p>
+{%- endif -%}
