@@ -5,14 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title> {# Uses the 'title' variable from the page's front matter #}
     <link rel="stylesheet" href="/css/style.css"> 
+
+    <script>
+    (function() {
+      // Function to set the theme attribute
+      const applyTheme = (theme) => {
+        document.documentElement.setAttribute('data-theme', theme);
+      };
+
+      // Check localStorage first
+      const storedTheme = localStorage.getItem('theme');
+      if (storedTheme) {
+        applyTheme(storedTheme);
+        return; // Exit if theme is found in storage
+      }
+
+      // If no stored theme, check OS preference
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      applyTheme(prefersDark ? 'dark' : 'light');
+    })(); // IIFE to avoid polluting global scope
+  </script>
+
   </head>
   <body>
     <header>
-      <h1>My Friend's Awesome Blog</h1>
+      <div class="site-title">
+        <a href="/">Ivana Bustamente</a>
+      </div>
+      <div class="header-right">
       <nav>
         <a href="/">Home</a>
         <a href="/about/">About</a> {# Link to a future About page #}
+        {# Add more nav links here if needed #}
       </nav>
+      <button id="theme-toggle" aria-label="Switch to dark mode">
+        <span class="icon-sun" hidden>
+          {# Use the filename of YOUR edited sun SVG #}
+          {% svgIcon "sun.svg" %} 
+        </span>
+        <span class="icon-moon">
+          {# Use the filename of YOUR edited moon SVG #}
+          {% svgIcon "moon.svg" %} 
+        </span>
+      </button>
+      </div>
     </header>
 
     <main>
@@ -20,7 +56,8 @@
     </main>
 
     <footer>
-      <p>&copy; {{ currentYear }} Your Friend's Name</p> {# Example dynamic data #}
+      <p>&copy; {{ currentYear }} Ivana Bustamente</p> {# Example dynamic data #}
     </footer>
+    <script src="/js/theme-switcher.js" defer></script>
   </body>
 </html>

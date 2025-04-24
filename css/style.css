@@ -1,0 +1,239 @@
+/* css/style.css */
+
+:root {
+    /* Define light theme variables */
+    --color-background: #eee;       /* Light page background */
+    --color-foreground: #eee;         /* Background for main content, headers */
+    --color-text: #333;               /* Default text */
+    --color-text-secondary: #666;     /* Lighter text (footer, dates) */
+    --color-heading: #111;             /* Darker headings */
+    --color-accent: #0056b3;           /* Links */
+    --color-border: #ccc;             /* Header bottom border */
+    --color-border-dashed: #eee;      /* Post list separator */
+    --color-intro-bg: #fff;        /* Intro section background */
+    --color-header-bg: #eee;          /* Original header background */
+    
+    /* You can add variables for fonts, spacing etc. too if desired */
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  }
+  
+  /* Basic Reset / Box Sizing */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: var(--font-body);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    color: var(--color-text);
+    background-color: var(--color-background);
+    transition: background-color 0.3s ease, color 0.3s ease; /* Add smooth transition */
+  }
+  
+  /* Basic Layout Spacing */
+  header,
+  main,
+  footer {
+    padding: 1rem 2rem; 
+    max-width: 960px;   /* Or 960px, 1000px, etc. - Set max width */
+  margin-left: auto;  /* Center the element */
+  margin-right: auto; /* Center the element */
+  }
+  
+  header {
+    transition: background-color 0.3s ease; 
+    
+    /* Add Flexbox for layout */
+    display: flex;
+    justify-content: space-between; /* Pushes title left and right group right */
+    align-items: center; /* Vertically aligns items */
+  
+    /* Keep padding, max-width, margin from before */
+    padding: 1rem 2rem; 
+  }
+  
+  /* Style the new Site Title */
+  .site-title a {
+    color: var(--color-text); /* Use text color variable */
+    text-decoration: none;
+    font-size: 2em; /* Adjust size as needed */
+    font-weight: bold;
+  }
+  
+  /* Container for items on the right */
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem; /* Space between nav and button */
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  
+  /* Ensure nav links are aligned (already handled by header-right align-items) */
+  nav a {
+    margin-right: 0.5em; /* Keep or adjust spacing between nav links */
+    color: var(--color-text); 
+    text-decoration: none;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Optional: Style the theme toggle button */
+  #theme-toggle {
+    background: none;          /* Remove default button background */
+    border: none;            /* Remove default button border */
+    padding: 0.25em;         /* Add a little padding around the icon */
+    margin: 0;               /* Remove any default margin */
+    cursor: pointer;         /* Show a pointer on hover */
+    color: var(--color-text); /* CRUCIAL: Set the color using your text variable */
+                             /* The SVG's 'currentColor' will inherit this */
+    font-size: 1em;          /* Reset font-size (we'll size the SVG below) */
+    line-height: 1;          /* Prevent extra line height affecting alignment */
+    
+    /* Use flex to help center the SVG inside if needed */
+    display: inline-flex;    
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Style the SVG elements specifically inside the button */
+  #theme-toggle svg {
+    width: 1.25em;  /* Control the size of the icon (relative to button font size) */
+    height: 1.25em; /* Keep width and height the same for square icons */
+    /* vertical-align: middle; */ /* Usually not needed with inline-flex */
+  }
+  
+  /* Optional: Ensure the spans don't add extra space */
+  #theme-toggle .icon-sun,
+  #theme-toggle .icon-moon {
+      display: none; /* Hide icons by default; controlled by hidden attribute */
+      line-height: 1;
+  }
+  /* Show only the icon without the hidden attribute */
+  #theme-toggle .icon-sun:not([hidden]),
+  #theme-toggle .icon-moon:not([hidden]) {
+      display: inline-flex;
+  }
+  
+  main {
+    background-color: var(--color-foreground); /* Use variable */
+    min-height: 60vh; 
+    transition: background-color 0.3s ease; /* Add transition */
+  }
+  
+  /* === Intro Section Styles === */
+  .intro-section {
+    display: flex; 
+    align-items: center; 
+    gap: 2em; 
+    margin-bottom: 3em; 
+    padding: 2em; 
+    background-color: var(--color-intro-bg); /* Use variable */
+    border-radius: 8px; 
+    transition: background-color 0.3s ease; /* Add transition */
+
+    max-width: 960px; /* Set maximum width (adjust value like 800px, 1000px etc. as needed) */
+    margin-top: 3rem;  /* Add space above the section (adjust value like 2em, 4rem etc.) */
+    margin-bottom: 3em; /* Keep existing space below */
+    margin-left: auto;  /* Center the section horizontally */
+    margin-right: auto; /* Center the section horizontally */
+  }
+  
+  .intro-text {
+    flex: 2; 
+  }
+  
+  .intro-image {
+    flex: 1; 
+    text-align: center; 
+  }
+  
+  .intro-image img {
+    max-width: 100%; /* Example: Limit image width (adjust as needed) */
+  margin: 0 auto; /* Center the image block if max-width is less than 100% */
+  height: auto; 
+  display: block; 
+  border-radius: 12px;
+  }
+  
+  /* === Responsive Breakpoint for Mobile === */
+  @media (max-width: 768px) { 
+    .intro-section {
+      flex-direction: column; 
+      text-align: center; 
+      padding: 1.5em;
+    }
+  
+    .intro-text {
+       margin-bottom: 1.5em; 
+    }
+  
+    .intro-image img {
+       max-width: 60%; 
+       margin: 0 auto; 
+    }
+  }
+  
+  
+  main h1, main h2 {
+    color: var(--color-heading); /* Use variable */
+  }
+  
+  /* Style for the post list on homepage */
+  main ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  main ul li {
+    margin-bottom: 1.5em;
+    border-bottom: 1px dashed var(--color-border-dashed); /* Use variable */
+    padding-bottom: 1.5em;
+    transition: border-color 0.3s ease; /* Add transition */
+  }
+  
+  main ul li a {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--color-text); /* Use variable (maybe same as default text?) */
+    text-decoration: none;
+  }
+  
+  main ul li a:hover {
+    color: var(--color-accent); /* Use variable */
+  }
+  
+  main ul li time {
+    display: block; 
+    font-size: 0.9em;
+    color: var(--color-text-secondary); /* Use variable */
+    margin-top: 0.25em;
+  }
+  
+  footer {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.9em;
+    color: var(--color-text-secondary); /* Use variable */
+  }
+  
+  /* === Dark Theme Overrides === */
+html[data-theme="dark"] {
+    --color-background: #1e1e1e;      /* Dark page background */
+    --color-foreground: #1e1e1e;      /* Slightly lighter dark for content background */
+    --color-text: #e0e0e0;            /* Light grey text */
+    --color-text-secondary: #a0a0a0;  /* Dimmer grey text */
+    --color-heading: #ffffff;         /* White headings */
+    --color-accent: #bb86fc;          /* Purple accent (example, choose yours) */
+    --color-border: #444;             /* Darker border */
+    --color-border-dashed: #333;     /* Darker dashed border */
+    --color-intro-bg: #2a2a2a;       /* Darker intro background */
+    --color-header-bg: #1e1e1e;       /* Same as foreground dark */
+  }
+  

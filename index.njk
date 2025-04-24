@@ -3,6 +3,25 @@ title: Home
 layout: base.njk
 ---
 
+<main>
+ {# === Start Intro Section === #}
+  <section class="intro-section">
+    <div class="intro-text">
+      <h2>Welcome to my Blog!</h2> {# Or your friend's name/greeting #}
+      <p>
+        Replace this with the actual introductory paragraph about 
+        your friend, their blog, or whatever welcome message you want 
+        to include here. It describes who they are or what the site is about.
+      </p>
+      {# You could add more paragraphs or even a link if needed #}
+    </div>
+    <div class="intro-image">
+      {# Make sure the src path matches your image folder/filename #}
+      <img src="/images/ivana.jpg" alt="Portrait of Ivana"> 
+    </div>
+  </section>
+  {# === End Intro Section === #}
+
 {# You can keep any introductory content you want here #}
 <h2>Recent Posts</h2>
 
@@ -26,3 +45,4 @@ layout: base.njk
 {%- else -%}
   <p>No posts found.</p>
 {%- endif -%}
+</main>
