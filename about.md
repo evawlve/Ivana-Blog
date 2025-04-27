@@ -4,6 +4,6 @@ layout: base.njk
 permalink: /about/ 
 ---
 
-## About Your Friend
+## About 
 
 Some details about the blog author...

@@ -1,10 +1,9 @@
----
-title: Home
-layout: base.njk
----
+{# index.njk #}
+{% extends "base.njk" %}
 
-<main>
- {# === Start Intro Section === #}
+{% block content %}
+
+  {# === Start Intro Section === #}
   <section class="intro-section">
     <div class="intro-text">
       <h2>Welcome to my Blog!</h2> {# Or your friend's name/greeting #}
@@ -22,27 +21,59 @@ layout: base.njk
   </section>
   {# === End Intro Section === #}
 
-{# You can keep any introductory content you want here #}
-<h2>Recent Posts</h2>
+<h1>Recent Posts</h1>
 
-{# Check if there are any posts in the collection #}
-{%- if collections.post and collections.post.length -%}
-  <ul>
-    {# Loop through the 'post' collection. 
-       We use 'reverse' to show newest posts first (based on date in front matter). #}
-    {%- for post in collections.post | reverse -%}
-      <li>
-        {# Create a link to the post using its URL #}
-        <a href="{{ post.url }}">
-          {# Display the post's title from its front matter #}
-          {{ post.data.title }}
-        </a>
-        {# Optional: Display the date - We'll format this better later #}
-        - <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
-      </li>
-    {%- endfor -%}
-  </ul>
-{%- else -%}
-  <p>No posts found.</p>
-{%- endif -%}
-</main>
+  {# === Start Recent Posts Section === #}
+  <section class="recent-posts">
+    {%- if collections.post and collections.post.length -%}
+      <ul class="post-list"> {# Added class for easier targeting #}
+        
+        {%- for post in collections.post | reverse -%}
+          <li class="post-list-item"> {# Added class for easier targeting #}
+            
+            {# Container for Text Content (Left Column on Desktop) #}
+            <div class="post-list-content">
+              {# Title Link - Use H3 for list context #}
+              <h3 class="post-list-title">
+                <a href="{{ post.url }}">{{ post.data.title }}</a>
+              </h3>
+              {# Date #}
+              <p class="post-list-meta">
+                  <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
+              </p>
+              {# Excerpt #}
+              {% if post.data.excerpt %}
+                <p class="post-excerpt">{{ post.data.excerpt }}</p>
+              {% endif %}
+              {# Read More Button Container #}
+              <div class="read-more-container">
+                  <a href="{{ post.url }}" class="read-more-button">Read More</a>
+              </div>
+            </div> {# End post-list-content #}
+
+            {# Container for Image (Right Column on Desktop) #}
+            {% if post.data.featuredImage and post.data.featuredImage.src %}
+              <div class="post-list-image-container">
+                <a href="{{ post.url }}" aria-hidden="true" tabindex="-1" class="post-list-image-link">
+                    <img 
+                      class="post-list-image"
+                      src="{{ post.data.featuredImage.src }}" 
+                      alt="{{ post.data.featuredImage.alt }}" 
+                      loading="lazy"
+                      width="320" {# Adjust dimensions for list view #}
+                      height="200" 
+                    >
+                </a>
+              </div>
+            {% endif %}
+
+          </li> {# End post-list-item #}
+        {%- endfor -%}
+
+      </ul>
+    {%- else -%}
+      <p>No posts found.</p>
+    {%- endif -%}
+  </section> {# === End Recent Posts Section === #}
+
+{% endblock %}

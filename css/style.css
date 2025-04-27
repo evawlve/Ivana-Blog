@@ -9,7 +9,7 @@
     --color-heading: #111;             /* Darker headings */
     --color-accent: #0056b3;           /* Links */
     --color-border: #ccc;             /* Header bottom border */
-    --color-border-dashed: #eee;      /* Post list separator */
+    --color-border-dashed: #666;      /* Post list separator */
     --color-intro-bg: #fff;        /* Intro section background */
     --color-header-bg: #eee;          /* Original header background */
     
@@ -39,7 +39,7 @@
   main,
   footer {
     padding: 1rem 2rem; 
-    max-width: 960px;   /* Or 960px, 1000px, etc. - Set max width */
+    max-width: 1400px;   /* Or 960px, 1000px, etc. - Set max width */
   margin-left: auto;  /* Center the element */
   margin-right: auto; /* Center the element */
   }
@@ -54,13 +54,109 @@
   
     /* Keep padding, max-width, margin from before */
     padding: 1rem 2rem; 
+    position: relative;
   }
+
+  /* Style for screen-reader only text */
+.sr-only { 
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Hide mobile toggle by default */
+.mobile-nav-toggle {
+  display: none; 
+}
+
+/* Desktop Navigation Styles */
+.primary-navigation {
+  display: flex;         
+  align-items: center;  
+  gap: 1.5em; /* Adjust gap between nav items */
+}
+.primary-navigation a { /* Style links */
+  color: var(--color-text);
+  text-decoration: none;
+  padding: 0.5em 0;
+}
+.primary-navigation a:hover { text-decoration: underline; }
+#theme-toggle { /* Style button */
+  background: none; border: none; padding: 0.25em; margin: 0;
+  cursor: pointer; color: var(--color-text); font-size: 1em; 
+  line-height: 1; display: inline-flex; align-items: center; justify-content: center;
+}
+#theme-toggle svg { width: 1.25em; height: 1.25em; }
+#theme-toggle .icon-sun:not([hidden]), #theme-toggle .icon-moon:not([hidden]) { display: inline-flex; }
+
+
+/* --- Mobile Navigation Breakpoint --- */
+@media (max-width: 768px) {
+  /* Show Mobile Toggle Button */
+  .mobile-nav-toggle {
+    display: block;
+    position: absolute;
+    z-index: 9999;
+    top: 0.5rem;
+    right: 2rem;
+    background: none;
+    border: none;
+    padding: 0.5em;
+    cursor: pointer;
+    color: var(--color-text);
+    font-size: 1.8em;
+    line-height: 1;
+    font-weight: bold;
+  }
+
+  /* Animated Mobile Navigation */
+  .primary-navigation {
+    display: flex; /* Always in DOM for animation */
+    flex-direction: column;
+    align-items: center;
+    gap: 2em;
+    position: fixed;
+    inset: 5rem 1rem auto 1rem;
+    background: var(--color-foreground);
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-16px) scale(0.98);
+    transition: opacity 300ms cubic-bezier(.4,0,.2,1),
+                transform 300ms cubic-bezier(.4,0,.2,1),
+                visibility 0s linear 300ms,
+                pointer-events 0s linear 300ms;
+  }
+  .primary-navigation[data-visible="true"] {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+    transition: opacity 300ms cubic-bezier(.4,0,.2,1),
+                transform 300ms cubic-bezier(.4,0,.2,1),
+                visibility 0s linear 0s,
+                pointer-events 0s linear 0s;
+  }
+  #theme-toggle { margin-left: 0; }
+}
+
+
   
   /* Style the new Site Title */
   .site-title a {
     color: var(--color-text); /* Use text color variable */
     text-decoration: none;
-    font-size: 2em; /* Adjust size as needed */
+    font-size: 1.7em; /* Adjust size as needed */
     font-weight: bold;
   }
   
@@ -106,7 +202,6 @@
   #theme-toggle svg {
     width: 1.25em;  /* Control the size of the icon (relative to button font size) */
     height: 1.25em; /* Keep width and height the same for square icons */
-    /* vertical-align: middle; */ /* Usually not needed with inline-flex */
   }
   
   /* Optional: Ensure the spans don't add extra space */
@@ -134,12 +229,13 @@
     gap: 2em; 
     margin-bottom: 3em; 
     padding: 2em; 
+    border-bottom: 5px solid var(--color-border-dashed);
     background-color: var(--color-intro-bg); /* Use variable */
     border-radius: 8px; 
     transition: background-color 0.3s ease; /* Add transition */
 
-    max-width: 960px; /* Set maximum width (adjust value like 800px, 1000px etc. as needed) */
-    margin-top: 3rem;  /* Add space above the section (adjust value like 2em, 4rem etc.) */
+     /* Set maximum width (adjust value like 800px, 1000px etc. as needed) */
+    margin-top: 1rem;  /* Add space above the section (adjust value like 2em, 4rem etc.) */
     margin-bottom: 3em; /* Keep existing space below */
     margin-left: auto;  /* Center the section horizontally */
     margin-right: auto; /* Center the section horizontally */
@@ -164,58 +260,182 @@
   
   /* === Responsive Breakpoint for Mobile === */
   @media (max-width: 768px) { 
-    .intro-section {
-      flex-direction: column; 
-      text-align: center; 
-      padding: 1.5em;
-    }
-  
     .intro-text {
        margin-bottom: 1.5em; 
     }
   
-    .intro-image img {
-       max-width: 60%; 
+    .intro-image img { 
        margin: 0 auto; 
     }
   }
-  
-  
+
+  /* === Responsive Breakpoint for Intro Section === */
+  @media (max-width: 768px) {
+    .intro-section {
+       gap: 1.5em; /* Slightly reduce gap */
+       flex-direction: column; /* Stack items vertically */
+    }
+    .intro-text {
+      margin-bottom: 1.5em; /* Space below text when stacked */
+      text-align: center; /* Center text when stacked */
+    }
+    .intro-image {
+      max-width: 300px; /* Limit container width (adjust px value as needed) */
+      margin-left: auto;  /* Center container if narrower than flex space */
+      margin-right: auto; /* Center container if narrower than flex space */
+      width: 100%; /* Ensure it takes available width up to max-width */
+    }
+  }
+
+  .recent-posts {
+      /* display: flex; */          /* REMOVE this line */
+      /* justify-content: center; */ /* REMOVE this line */
+      
+      /* Keep these if desired: */
+      font-size: 1rem;        /* Applies large size to H2 */
+      margin-bottom: 1em;     /* Space below the whole section */
+    
+      /* Optional: Add this if you want the H2 text centered */
+      /* text-align: center; */ 
+    }
+
   main h1, main h2 {
     color: var(--color-heading); /* Use variable */
   }
+
+  main h1 {
+    font-size: 1.7em;
+    border-bottom: 1px solid var(--color-border); /* Add solid border */
+    padding-bottom: 0.5em; /* Add space between text and border */
+    margin-bottom: 1.5em; /* Add space below border */
+  }
   
-  /* Style for the post list on homepage */
-  main ul {
+  /* === Homepage Post List Styles === */
+  .post-list {
     list-style: none;
     padding: 0;
+    margin: 0;
+  }
+
+  .post-list-item {
+    display: flex;          
+    gap: 2em;             
+    align-items: flex-start; /* Align text/image containers to top */
+    margin-bottom: 3em;   
+    padding-bottom: 2em;  
+    border-bottom: 1px dashed var(--color-border-dashed); 
+  }
+
+  .post-list-content {
+    flex: 1; /* Text takes 1/3 width */
+    display: flex; 
+    flex-direction: column; 
+    min-width: 0;
+  }
+
+  .post-list-image {
+    display: block;         
+    width: 100%;           
+    max-width: 500px;     
+    height: auto;           
+    margin-left: auto;      
+    margin-right: auto;     
+    border-radius: 8px; 
+    /* --- MOVE transition HERE --- */
+    transition: box-shadow 0.3s ease; 
   }
   
-  main ul li {
-    margin-bottom: 1.5em;
-    border-bottom: 1px dashed var(--color-border-dashed); /* Use variable */
-    padding-bottom: 1.5em;
-    transition: border-color 0.3s ease; /* Add transition */
+  /* Ensure the link wrapper handles spacing below */
+  a.post-list-image-link {
+  position: relative;
+  display: block;
+  margin-bottom: 1em;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+a.post-list-image-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background: rgba(0,0,0,0); /* Transparent by default */
+  pointer-events: none;
+  transition: background 0.3s;
+}
+
+a.post-list-image-link:hover::after,
+a.post-list-image-link:focus::after {
+  background: rgba(0,0,0,0.18); /* Slight dark overlay on hover */
+}
+
+
+  .post-list-title { /* Style for the H3 title in the list */
+    margin-top: 0;
+    margin-bottom: 0.1em;
+    color: var(--color-text); /* Use main text color */
+    transition: color 0.2s;
+    font-size: 1.4em; /* Example size */
   }
-  
-  main ul li a {
-    font-size: 1.2em;
-    font-weight: bold;
-    color: var(--color-text); /* Use variable (maybe same as default text?) */
+
+  .post-list-title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .post-list-title a:hover,
+  .post-list-title a:focus {
+    color: var(--color-accent, #6c63ff); /* Use accent or your preferred hover color */
     text-decoration: none;
   }
-  
-  main ul li a:hover {
-    color: var(--color-accent); /* Use variable */
+
+  .post-list-meta { /* Style for the date paragraph */
+      font-size: 0.9em;
+      color: var(--color-text-secondary);
+      margin: 0 0 0.3em 0; /* REDUCED space below meta */
   }
-  
-  main ul li time {
-    display: block; 
-    font-size: 0.9em;
-    color: var(--color-text-secondary); /* Use variable */
-    margin-top: 0.25em;
+
+  .post-excerpt {
+    font-size: 0.95em; 
+    color: var(--color-text-secondary); 
+    margin-top: 0.2em; /* REDUCED space above excerpt */
+    margin-bottom: 1.5em; /* Space before read more button */
+    flex-grow: 1; /* Allow excerpt to push button down */
+    overflow-wrap: break-word; /* Allow breaking long words to prevent overflow */
+  word-break: break-word;
   }
-  
+
+  /* Container for the read more button */
+.read-more-container {
+  text-align: center; /* Center the inline-block button */
+  margin-top: 1.5em;  /* Add space above the button */
+}
+
+/* Style the link to look like a button */
+.read-more-button {
+  display: inline-block; /* Important for padding/margins/centering */
+  padding: 0.6em 1.5em;  /* Vertical and horizontal padding */
+  border: 1px solid var(--color-text); /* Use accent color for border */
+  border-radius: 5px; /* Slightly rounded corners */
+  background-color: var(--color-text); /* Use accent color for background */
+  color: var(--color-background); /* White text usually works well on accent colors */
+  /* Define a --color-button-text variable if you prefer */
+  /* color: var(--color-button-text, #ffffff); */
+  text-decoration: none; /* Remove underline from link */
+  font-weight: bold;
+  font-size: 0.9em; /* Slightly smaller text */
+  transition: background-color 0.2s ease, color 0.2s ease; /* Smooth hover */
+}
+
+/* Style for hover/focus states */
+.read-more-button:hover,
+.read-more-button:focus {
+  background-color: var(--color-foreground); /* Switch background on hover */
+  color: var(--color-text); /* Switch text color on hover */
+  text-decoration: none; /* Ensure underline doesn't appear */
+}
+
   footer {
     text-align: center;
     margin-top: 2rem;
@@ -236,4 +456,163 @@ html[data-theme="dark"] {
     --color-intro-bg: #2a2a2a;       /* Darker intro background */
     --color-header-bg: #1e1e1e;       /* Same as foreground dark */
   }
+
+  /* === Post Styles === */
+  .post {
+    /* Add padding/margin if needed */
+  }
   
+  .post-header {
+    margin-bottom: 2em; /* Space between header and content */
+    border-bottom: 1px solid var(--color-border-dashed); /* Optional separator */
+    padding-bottom: 1em;
+    display: flex;           /* Make this a flex container */
+    flex-direction: column;  /* Stack children vertically */
+    align-items: center;     /* Center children horizontally */
+  }
+  
+  .post-title {
+    font-size: 1.6rem;
+    margin-bottom: 0.2em; /* Space below title */
+    /* Inherits h1 styles, override if needed */
+  }
+  
+  .post-meta {
+    font-size: 1em;
+    color: var(--color-text-secondary);
+    margin-top: 0;
+  }
+  
+  .post-content {
+    /* Styles for paragraphs, blockquotes etc. within the post */
+  }
+  .post-content p {
+      line-height: 1.7; /* Example: slightly more line spacing for post body */
+  }
+  
+  .post-featured-image { 
+    display: block;         /* Make it block level */
+    width: 100%;            /* Responsive width */
+    max-width: 700px;       /* Max width relative to content, adjust as needed */
+    height: auto;           /* Maintain aspect ratio */
+    margin: 1.5em auto 2.5em; /* Space above/below and center horizontally */
+    border-radius: 8px;     /* Optional: rounded corners */
+}
+
+  /* === Responsive adjustments for Post List === */
+@media (max-width: 768px) { /* Adjusted breakpoint */
+  .post-list-item {
+    flex-direction: column; /* Stack columns */
+    gap: 0.1em; /* REDUCED gap for overall tighter spacing */
+    align-items: center; /* CENTER flex items horizontally */
+  }
+
+  .post-list-content {
+    /* flex-basis: auto; */ /* No longer needed */
+    /* width: 100%; */    /* No longer needed */
+    display: contents; /* Make children direct flex items of .post-list-item */
+    /* Order is now controlled by individual children */
+  }
+
+  /* Apply order to the actual elements */
+  .post-list-title {
+    order: 1;
+    margin-bottom: 0.1em; /* ADDED: Explicitly small margin on mobile */
+    /* text-align: center; */ /* REMOVED - Use align-items on parent */
+  }
+  .post-list-meta {
+    order: 2;
+    /* text-align: center; */ /* REMOVED - Use align-items on parent */
+    margin-bottom: 0.5em; /* REDUCED space before image */
+  }
+  .post-list-image-container {
+    order: 3;
+    /* flex-basis: auto; */ /* No longer needed */
+    width: 100%;
+    max-width: 450px; /* Optional: Limit image width on mobile */
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .post-excerpt {
+    order: 4;
+    text-align: center; /* Align this item to the start (left) */
+    width: 100%; /* Ensure it takes full width for text wrapping */
+    max-width: 500px; /* ADDED: Limit max width (adjust as needed) */
+    /* text-align: center; */ /* REMOVED - Default to left align */
+    margin-top: 0.2em; /* REDUCED space after image */
+    margin-bottom: 0.5em; /* ADDED space before button */
+  }
+  .read-more-container {
+    order: 5;
+    /* align-self: center; */ /* Inherits from align-items: center on parent */
+    text-align: center; /* Keep this to center the inline-block button *within* the container */
+    margin-top: 0; /* REDUCED space above button */
+  }
+
+}
+
+  /* === Contact Form Styles === */
+  .contact-form {
+    /* max-width: 600px; */ /* Remove max-width to allow full width */
+    margin: 2em 0; /* Keep vertical margin, remove horizontal auto margin */
+    padding: 2em;
+    background-color: var(--color-intro-bg); /* Use similar background as intro */
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+  }
+
+  .form-group {
+    margin-bottom: 1.5em; /* Space between form groups */
+  }
+
+  .form-group label {
+    display: block; /* Make label take full width */
+    margin-bottom: 0.5em; /* Space below label */
+    color: var(--color-text);
+    font-weight: bold;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group textarea {
+    width: 100%; /* Make inputs take full width */
+    padding: 0.8em;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: inherit; /* Use body font */
+    font-size: 1em;
+    transition: border-color 0.2s ease;
+  }
+
+  .form-group input[type="text"]:focus,
+  .form-group input[type="email"]:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-accent); /* Highlight border on focus */
+  }
+
+  .form-group textarea {
+    resize: vertical; /* Allow vertical resizing */
+  }
+
+  .submit-button {
+    display: inline-block;
+    padding: 0.8em 1.8em;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--color-accent); /* Use accent color */
+    color: var(--color-background); /* White or light text */
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-align: center;
+  }
+
+  .submit-button:hover,
+  .submit-button:focus {
+    background-color: hsl(from var(--color-accent) h s calc(l - 10%)); /* Slightly darken accent on hover */
+    outline: none;
+  }

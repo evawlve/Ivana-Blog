@@ -1,0 +1,38 @@
+{# _includes/post.njk #}
+{% extends "base.njk" %} {# Inherit from the main layout #}
+
+{# Override the 'content' block defined in base.njk #}
+{% block content %}
+  <article class="post">
+    <header class="post-header">
+      {# Display the post title from front matter #}
+      <h1 class="post-title">{{ title }}</h1> 
+      {# Display the post date from front matter, using our existing filter #}
+      <p class="post-meta">
+        Published on <time datetime="{{ date | htmlDateString }}">{{ date | readableDate }}</time>
+        {# You could add author, categories here later #}
+      </p>
+      {# === ADD FEATURED IMAGE BLOCK === #}
+    {% if featuredImage and featuredImage.src %}
+      <img 
+        class="post-featured-image" {# Specific class for styling on post page #}
+        src="{{ featuredImage.src }}" 
+        alt="{{ featuredImage.alt }}" 
+        loading="lazy" 
+        width="700"     {# Example width (adjust based on your main content width) #}
+        height="400"    {# Example height (adjust for aspect ratio) #}
+      >
+    {% endif %}
+    {# === END FEATURED IMAGE BLOCK === #}
+    </header>
+
+    <div class="post-content">
+      {# The main content from the Markdown file #}
+      {{ content | safe }} 
+    </div>
+
+    {# Optional: Add post footer - tags, share buttons etc. #}
+    {# <footer class="post-footer"> ... </footer> #}
+
+  </article>
+{% endblock %}

@@ -32,32 +32,45 @@
       <div class="site-title">
         <a href="/">Ivana Bustamente</a>
       </div>
-      <div class="header-right">
-      <nav>
-        <a href="/">Home</a>
-        <a href="/about/">About</a> {# Link to a future About page #}
-        {# Add more nav links here if needed #}
-      </nav>
-      <button id="theme-toggle" aria-label="Switch to dark mode">
-        <span class="icon-sun" hidden>
-          {# Use the filename of YOUR edited sun SVG #}
-          {% svgIcon "sun.svg" %} 
-        </span>
-        <span class="icon-moon">
-          {# Use the filename of YOUR edited moon SVG #}
-          {% svgIcon "moon.svg" %} 
-        </span>
-      </button>
-      </div>
+
+
+      {# Hamburger Button - Using text characters #}
+  <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+    <span class="sr-only">Menu</span> {# Keep for screen readers #}
+    {# Replace SVGs with text characters #}
+    <span class="icon-menu">☰</span> 
+    <span class="icon-close" hidden>✕</span> {# Or use X #}
+  </button>
+
+  {# Navigation container: Hidden on mobile, shown on desktop #}
+  {# data-visible attribute is toggled by JS #}
+  <nav id="primary-navigation" class="primary-navigation" data-visible="false">
+    <a href="/">Home</a>
+    <a href="/about/">About</a> 
+    <a href="/contact/">Contact</a>
+    {# Theme toggle is now part of the primary nav #}
+    <button id="theme-toggle" aria-label="Toggle theme">
+      <span class="icon-sun">{% svgIcon "sun.svg" %}</span>
+      <span class="icon-moon">{% svgIcon "moon.svg" %}</span>
+    </button> 
+  </nav>
+
+</header>
     </header>
 
     <main>
-      {{ content | safe }} {# This is where the content from your .md files will be inserted #}
+      {# Define the 'content' block #}
+  {% block content %} 
+    {# Default content if block is not overridden (uses page's 'content' variable) #}
+    {{ content | safe }} 
+  {% endblock %}
     </main>
 
     <footer>
       <p>&copy; {{ currentYear }} Ivana Bustamente</p> {# Example dynamic data #}
+      <a href="/contact/">Contact</a>
     </footer>
     <script src="/js/theme-switcher.js" defer></script>
+    <script src="/js/main.js"></script>
   </body>
 </html>
