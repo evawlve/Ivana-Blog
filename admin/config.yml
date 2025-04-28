@@ -1,0 +1,58 @@
+# admin/config.yml
+
+# This top-level key tells Decap which Git backend to use.
+# We'll start with GitHub (requires user to have GitHub account & repo access)
+# Requires setting up OAuth App on GitHub later.
+# Other options: gitlab, git-gateway (for Netlify), etc.
+backend:
+  name: git-gateway # Use Netlify's Git Gateway
+  branch: main # Or your default branch name
+  # Optional: Customize commit messages made by the CMS
+  commit_messages: 
+    create: 'Create {{collection}} “{{slug}}”'
+    update: 'Update {{collection}} “{{slug}}”'
+    delete: 'Delete {{collection}} “{{slug}}”'
+    uploadMedia: 'Upload “{{path}}”'
+    deleteMedia: 'Delete “{{path}}”'
+    openAuthoring: '{{message}}'
+
+# Media files (like images uploaded via CMS) configuration
+media_folder: "images/uploads" # Where to store uploaded files in the repo (relative to root)
+public_folder: "/images/uploads" # Public path to access uploaded files on the live site
+
+# Define the content types (Collections) your friend can edit
+collections:
+  # Collection for Blog Posts
+  - name: "posts" # Internal name for the collection
+    label: "Blog Posts" # Display name in the CMS UI
+    folder: "posts" # The folder in your repo where post Markdown files are stored
+    create: true # Allow creating new posts in the UI
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # How to name new files (based on title)
+    fields: # Define the fields available in the editor for each post
+      # --- Map these fields to your existing front matter ---
+      - { label: "Layout", name: "layout", widget: "hidden", default: "post.njk" } # Keep using post layout
+      - { label: "Title", name: "title", widget: "string" } # Simple text input
+      - { label: "Publish Date", name: "date", widget: "datetime" } # Date picker
+      - { label: "Tags", name: "tags", widget: "list", required: false } # List of tags (optional)
+      - { label: "Excerpt", name: "excerpt", widget: "text", required: false } # Textarea for summary
+      - label: "Featured Image" # Group image fields
+        name: "featuredImage" 
+        widget: "object" # Treat as a sub-object in front matter
+        required: false
+        fields:
+          - { label: "Image", name: "src", widget: "image" } # Image upload/select widget
+          - { label: "Alt Text", name: "alt", widget: "string" } # Alt text input
+      - { label: "Body", name: "body", widget: "markdown" } # Main Markdown editor for post content
+
+  # --- Example: Add a collection for the 'About' page if needed ---
+  # - name: "pages"
+  #   label: "Pages"
+  #   files: # Edit specific files instead of a folder
+  #     - label: "About Page"
+  #       name: "about"
+  #       file: "about.md" # Path to the file relative to root
+  #       fields:
+  #         - { label: "Layout", name: "layout", widget: "hidden", default: "base.njk" }
+  #         - { label: "Title", name: "title", widget: "string" }
+  #         - { label: "Permalink", name: "permalink", widget: "hidden", default: "/about/" }
+  #         - { label: "Body", name: "body", widget: "markdown" }
