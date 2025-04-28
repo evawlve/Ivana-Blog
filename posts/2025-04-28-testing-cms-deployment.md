@@ -1,9 +1,8 @@
 ---
 layout: post.njk
 title: testing cms deployment
-date: 2025-04-27T17:50:00.000Z
-tags:
-  - idk
+date: 2025-04-27
+tags: ["post"]
 excerpt: showing my home bruv
 featuredImage:
   src: /images/uploads/laketahoe.webp

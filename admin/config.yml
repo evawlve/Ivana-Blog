@@ -33,7 +33,7 @@ collections:
       - { label: "Layout", name: "layout", widget: "hidden", default: "post.njk" } # Keep using post layout
       - { label: "Title", name: "title", widget: "string" } # Simple text input
       - { label: "Publish Date", name: "date", widget: "datetime" } # Date picker
-      - { label: "Tags", name: "tags", widget: "list", required: false } # List of tags (optional)
+      - { label: "Tags", name: "tags", widget: "list", required: false, default: ["post"]} # List of tags (optional)
       - { label: "Excerpt", name: "excerpt", widget: "text", required: false } # Textarea for summary
       - label: "Featured Image" # Group image fields
         name: "featuredImage" 
