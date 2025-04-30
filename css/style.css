@@ -54,7 +54,10 @@
   
     /* Keep padding, max-width, margin from before */
     padding: 1rem 2rem; 
-    position: relative;
+    position: sticky;
+    top: 0;
+    background-color: var(--color-background); /* Match page background */
+    z-index: 1000; /* Ensure header stays above content */
   }
 
   /* Style for screen-reader only text */
