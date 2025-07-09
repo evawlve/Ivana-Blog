@@ -105,7 +105,7 @@
   .mobile-nav-toggle {
     display: block;
     position: absolute;
-    z-index: 9999;
+    z-index: 10000;
     top: 0.5rem;
     right: 2rem;
     background: none;
@@ -130,7 +130,7 @@
     padding: 2em;
     border-radius: 8px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    z-index: 1000;
+    z-index: 9999;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -223,6 +223,8 @@
     background-color: var(--color-foreground); /* Use variable */
     min-height: 60vh; 
     transition: background-color 0.3s ease; /* Add transition */
+    position: relative;
+    z-index: 1;
   }
   
   /* === Intro Section Styles === */
@@ -618,4 +620,123 @@ html[data-theme="dark"] {
   .submit-button:focus {
     background-color: hsl(from var(--color-accent) h s calc(l - 10%)); /* Slightly darken accent on hover */
     outline: none;
+  }
+
+  /* === About Page Styles === */
+  .about-section {
+    margin: 2rem 0;
+    display: grid;
+    grid-template-areas: 
+      "heading heading"
+      "text image";
+    grid-template-columns: 1fr auto;
+    gap: 2rem 3rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .about-heading {
+    grid-area: heading;
+    margin: 0 0 1rem 0;
+    color: var(--color-heading);
+    text-align: left;
+  }
+
+  .about-content {
+    display: contents;
+  }
+
+  .about-text {
+    grid-area: text;
+    min-width: 0; /* Allow text to shrink */
+  }
+
+  .about-text p {
+    margin-bottom: 1.2rem;
+    line-height: 1.7;
+    color: var(--color-text);
+  }
+
+  .about-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .about-image {
+    grid-area: image;
+    flex: 0 0 400px;
+    max-width: 400px;
+  }
+
+  .about-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .about-image img:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Responsive breakpoints for about page */
+  @media (max-width: 1024px) {
+    .about-section {
+      gap: 2rem;
+    }
+    
+    .about-image {
+      flex: 0 0 350px;
+      max-width: 350px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .about-image {
+      flex: 0 0 300px;
+      max-width: 300px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about-section {
+      grid-template-areas: 
+        "heading"
+        "image"
+        "text";
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .about-heading {
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .about-image {
+      justify-self: center;
+      flex: 0 0 auto;
+      max-width: 300px;
+      width: 100%;
+    }
+
+    .about-image img {
+      max-width: 300px;
+      margin: 0 auto;
+      display: block;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .about-image img {
+      max-width: 250px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .about-image img {
+      max-width: 200px;
+    }
   }
