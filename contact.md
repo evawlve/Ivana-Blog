@@ -8,7 +8,7 @@ permalink: /contact/
 
 Have a question or want to collaborate? Fill out the form below!
 
-<form class="contact-form" action="#" method="POST"> {# Replace '#' with your form handler URL if you have one #}
+<form class="contact-form" action="https://formspree.io/f/xgvyjpqv" method="POST"> {# Replace '#' with your form handler URL if you have one #}
   <div class="form-group">
     <label for="name">Name:</label>
     <input type="text" id="name" name="name" required>
